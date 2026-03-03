@@ -4,12 +4,13 @@
 
 [![FastAPI](https://img.shields.io/badge/FastAPI-009688?logo=fastapi)](https://fastapi.tiangolo.com/)
 [![React](https://img.shields.io/badge/React-19.2-61dafb?logo=react)](https://react.dev/)
-[![Ollama](https://img.shields.io/badge/Ollama-Qwen3.5--VL-FF6B6B?logo=artificial-intelligence)](https://ollama.ai/)
+[![Python](https://img.shields.io/badge/Python-3.10-3776ab?logo=python)](https://www.python.org/)
+[![Ollama](https://img.shields.io/badge/Ollama-Local_AI-FF6B6B?logo=ollama)](https://ollama.ai/)
 
 ## 🎯 核心功能
 
 ### 1. 智能诊断
-- � 上传烟草叶片图片（最多 3 张）
+- 📷 上传烟草叶片图片（最多 3 张）
 - 🌡️ 填写环境数据（温度、湿度、生长阶段）
 - 🤖 AI 分析并生成诊断报告
 - 💡 提供健康评分和防治建议
