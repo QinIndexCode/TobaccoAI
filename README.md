@@ -1,6 +1,6 @@
 <div align="center">
 
-![TobaccoAI](TobaccoAI.png)
+<img src="TobaccoAI.png" width="200" alt="TobaccoAI"/>
 
 # 烟智通（TobaccoAI） - 烟草病害智能诊断系统
 
