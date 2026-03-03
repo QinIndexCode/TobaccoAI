@@ -1,0 +1,6 @@
+export { default as Home } from './Home'
+export { default as Diagnose } from './Diagnose'
+export { default as Result } from './Result'
+export { default as History } from './History'
+export { default as HistoryDetail } from './HistoryDetail'
+export { default as Knowledge } from './Knowledge'

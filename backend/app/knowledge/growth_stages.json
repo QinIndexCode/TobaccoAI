@@ -1,0 +1,101 @@
+[
+  {
+    "stage": "出苗期",
+    "temp_range": "25-28℃",
+    "humidity_air": "70-80%",
+    "humidity_soil": "75-85%",
+    "key_management": "保温保湿",
+    "duration": "5-7 天",
+    "description": "种子萌发出土，需要充足的水分和适宜的温度"
+  },
+  {
+    "stage": "十字期",
+    "temp_range": "22-25℃",
+    "humidity_air": "65-75%",
+    "humidity_soil": "70-80%",
+    "key_management": "及时间苗",
+    "duration": "7-10 天",
+    "description": "两片真叶交叉呈十字形，根系开始发育"
+  },
+  {
+    "stage": "生根期",
+    "temp_range": "20-25℃",
+    "humidity_air": "60-70%",
+    "humidity_soil": "65-75%",
+    "key_management": "促根控水",
+    "duration": "10-15 天",
+    "description": "根系快速生长，地上部生长缓慢，需控制水分促进根系发育"
+  },
+  {
+    "stage": "苗期",
+    "temp_range": "20-28℃",
+    "humidity_air": "60-75%",
+    "humidity_soil": "65-75%",
+    "key_management": "控水防徒长",
+    "duration": "25-35 天",
+    "description": "茎叶生长加快，需要充足光照，防止徒长培育壮苗"
+  },
+  {
+    "stage": "团棵期",
+    "temp_range": "22-28℃",
+    "humidity_air": "60-75%",
+    "humidity_soil": "65-75%",
+    "key_management": "促根壮苗",
+    "duration": "10-15 天",
+    "description": "植株快速生长，叶片数增加，根系扩展，是营养生长关键期"
+  },
+  {
+    "stage": "伸根期",
+    "temp_range": "23-28℃",
+    "humidity_air": "60-75%",
+    "humidity_soil": "65-80%",
+    "key_management": "中耕培土",
+    "duration": "15-20 天",
+    "description": "茎秆伸长，根系继续扩展，需要中耕培土促进根系发育"
+  },
+  {
+    "stage": "旺长期",
+    "temp_range": "25-30℃",
+    "humidity_air": "65-80%",
+    "humidity_soil": "70-85%",
+    "key_management": "重施氮钾",
+    "duration": "20-30 天",
+    "description": "生长最旺盛时期，茎叶快速生长，需要充足的水肥供应"
+  },
+  {
+    "stage": "现蕾期",
+    "temp_range": "23-28℃",
+    "humidity_air": "60-75%",
+    "humidity_soil": "65-75%",
+    "key_management": "控氮增钾",
+    "duration": "7-10 天",
+    "description": "顶端出现花蕾，营养生长向生殖生长转化，需控制氮肥"
+  },
+  {
+    "stage": "打顶期",
+    "temp_range": "22-28℃",
+    "humidity_air": "60-75%",
+    "humidity_soil": "60-70%",
+    "key_management": "打顶抹芽",
+    "duration": "5-7 天",
+    "description": "去除顶端优势，促进叶片生长，及时抹除腋芽"
+  },
+  {
+    "stage": "成熟期",
+    "temp_range": "18-26℃",
+    "humidity_air": "50-70%",
+    "humidity_soil": "50-65%",
+    "key_management": "控水促熟",
+    "duration": "20-30 天",
+    "description": "叶片逐渐成熟，需要控制水分促进成熟，提高品质"
+  },
+  {
+    "stage": "采收期",
+    "temp_range": "20-28℃",
+    "humidity_air": "60-70%",
+    "humidity_soil": "55-65%",
+    "key_management": "适时采收",
+    "duration": "15-25 天",
+    "description": "叶片成熟达到采收标准，分期采收，保证质量"
+  }
+]
