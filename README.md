@@ -5,11 +5,9 @@
 # 烟智通（TobaccoAI）
 
 🌿 基于本地 AI 模型的烟草病害智能诊断工具
+</div>
 
-[![FastAPI](https://img.shields.io/badge/FastAPI-009688?logo=fastapi)](https://fastapi.tiangolo.com/)
-[![React](https://img.shields.io/badge/React-19.2-61dafb?logo=react)](https://react.dev/)
-[![Python](https://img.shields.io/badge/Python-3.10-3776ab?logo=python)](https://www.python.org/)
-[![Ollama](https://img.shields.io/badge/Ollama-Local_AI-FF6B6B?logo=ollama)](https://ollama.ai/)
+[![FastAPI](https://img.shields.io/badge/FastAPI-009688?logo=fastapi)](https://fastapi.tiangolo.com/) [![React](https://img.shields.io/badge/React-19.2-61dafb?logo=react)](https://react.dev/) [![Python](https://img.shields.io/badge/Python-3.10-3776ab?logo=python)](https://www.python.org/) [![Ollama](https://img.shields.io/badge/Ollama-Local_AI-FF6B6B?logo=ollama)](https://ollama.ai/)
 
 ---
 
@@ -88,4 +86,3 @@ start.bat
 
 Made with ❤️ for tobacco farmers
 
-</div>
