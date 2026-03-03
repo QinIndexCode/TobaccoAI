@@ -25,9 +25,9 @@ Complete feature introduction, technical architecture, quick start guide and API
 
 ## 🔗 快速链接 / Quick Links
 
-- [📚 API 文档](http://localhost:8000/docs) - Swagger UI
-- [🌿 前端应用](http://localhost:5173) - React 应用
-- [🤖 Ollama](https://ollama.ai/) - AI 模型平台
+- **API 接口文档** (http://localhost:8000/docs) - Swagger UI 接口测试工具
+- **Web 应用** (http://localhost:5173) - 前端用户界面
+- **Ollama 官网** (https://ollama.ai/) - AI 模型下载
 
 ## 🔍 目录 / Table of Contents
 
