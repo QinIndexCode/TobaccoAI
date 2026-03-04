@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="TobaccoAI.png" width="200" alt="TobaccoAI"/>
+<img src="frontend/public/TobaccoAI.png" width="200" alt="TobaccoAI"/>
 
 # 烟智通（TobaccoAI）
 

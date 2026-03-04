@@ -1,5 +1,6 @@
 import { Link, useLocation } from 'react-router-dom'
 import { SettingOutlined } from '@ant-design/icons'
+import logo from '../../assets/TobaccoAI.png'
 
 function Header() {
   const location = useLocation()
@@ -24,12 +25,11 @@ function Header() {
             className="flex items-center gap-3"
             aria-label="烟智通首页"
           >
-            <div 
-              className="w-9 h-9 bg-primary-600 rounded-lg flex items-center justify-center shadow-md"
-              aria-hidden="true"
-            >
-              <span className="text-white font-bold text-base">烟</span>
-            </div>
+            <img 
+              src={logo} 
+              alt="烟智通" 
+              className="w-9 h-9 rounded-lg shadow-md object-cover"
+            />
             <span className="font-bold text-xl text-primary-700">烟智通</span>
           </Link>
           
