@@ -4,6 +4,7 @@ AI 问诊服务 - 基于知识库和 LLM 的智能诊断和建议
 """
 import json
 import os
+import re
 import uuid
 from datetime import datetime
 from typing import List, Dict, Any, Optional
@@ -409,9 +410,6 @@ class AIConsultationService:
             "prevention": [],
             "treatment": [],
         }
-        
-        # 使用正则表达式按 Markdown 标题分割
-        import re
         
         # 定义章节映射
         section_patterns = {

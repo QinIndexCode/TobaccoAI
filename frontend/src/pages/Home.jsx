@@ -132,15 +132,7 @@ function Home() {
             current={-1}
             items={steps.map(step => ({
               title: step.title,
-              description: (
-                <div className="step-content">
-                  <div className="step-icon">{step.icon}</div>
-                  <div className="step-text">
-                    <div className="step-subtitle">{step.subtitle}</div>
-                    <div className="step-detail">{step.content}</div>
-                  </div>
-                </div>
-              ),
+              description: step.subtitle,
             }))}
             responsive={false}
             className="custom-steps"

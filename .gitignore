@@ -61,3 +61,8 @@ build/
 dist/
 *.egg-info/
 .eggs/
+
+# 其他
+.trae/
+.vscode/
+

@@ -22,7 +22,8 @@ from app.config import settings
 
 router = APIRouter(prefix="/api", tags=["diagnosis"])
 
-UPLOAD_DIR = Path(settings.UPLOAD_DIR)
+# 使用与 main.py 相同的上传目录路径
+UPLOAD_DIR = Path(os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), settings.UPLOAD_DIR))
 UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
 
 ALLOWED_EXTENSIONS = {'.jpg', '.jpeg', '.png', '.gif', '.bmp', '.webp'}
@@ -73,7 +74,8 @@ async def save_upload_file(file: UploadFile) -> str:
     # Use thread pool for file I/O to avoid blocking event loop
     await asyncio.to_thread(lambda: open(file_path, "wb").write(content))
     
-    return str(file_path)
+    # 返回相对路径，用于前端访问
+    return f"uploads/{file_name}"
 
 
 def build_knowledge_context(growth_stage: str, detected_issues: List[dict] = None) -> dict:
@@ -381,10 +383,15 @@ async def delete_history_item(diagnosis_id: str, db: AsyncSession = Depends(get_
     image_paths = json.loads(record.image_paths)
     for image_path in image_paths:
         try:
+            # 将相对路径转换为绝对路径
+            if not os.path.isabs(image_path):
+                abs_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), image_path)
+            else:
+                abs_path = image_path
+            
             # 验证文件路径是否在允许的目录范围内
-            abs_path = os.path.abspath(image_path)
             abs_upload_dir = os.path.abspath(str(UPLOAD_DIR))
-            if not abs_path.startswith(abs_upload_dir):
+            if not os.path.abspath(abs_path).startswith(abs_upload_dir):
                 print(f"非法文件路径: {image_path}")
                 continue
             if os.path.exists(abs_path):

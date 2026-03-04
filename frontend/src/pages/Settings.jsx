@@ -24,6 +24,7 @@ const Settings = () => {
   const [availableModels, setAvailableModels] = useState([])
   const [loadingModels, setLoadingModels] = useState(false)
   const [initialized, setInitialized] = useState(false) // 标记是否已初始化
+  const [providerType, setProviderType] = useState('ollama-local') // 用于控制表单显示
 
   // 服务商选项
   const providers = [
@@ -56,10 +57,12 @@ const Settings = () => {
               vlModel: result.vlModel,  // 使用验证后的模型
               llmModel: result.llmModel,  // 使用验证后的模型
             })
+            setProviderType(data.provider || 'ollama-local')
             setInitialized(true)
           }, 100)
         } else {
           form.setFieldsValue(data)
+          setProviderType(data.provider || 'ollama-local')
           setInitialized(true)
         }
       }
@@ -259,6 +262,7 @@ const Settings = () => {
   // 监听服务商变化
   const handleProviderChange = (value) => {
     form.setFieldsValue({ provider: value })
+    setProviderType(value)
     // 根据服务商类型显示不同的配置项
     if (value === 'openai-compatible') {
       // OpenAI 兼容模式，显示 API Key 配置
@@ -336,65 +340,69 @@ const Settings = () => {
             </Form.Item>
 
             {/* Ollama 配置项 */}
-            <Form.Item
-              name="ollamaBaseUrl"
-              label="Ollama 服务地址"
-              rules={[
-                { required: true, message: '请输入 Ollama 服务地址' },
-                { pattern: /^https?:\/\/.+/, message: '请输入有效的 URL 地址' },
-              ]}
-              extra="Ollama 服务的完整地址，包括端口号"
-              style={{ display: form.getFieldValue('provider') !== 'openai-compatible' ? 'block' : 'none' }}
-            >
-              <Input
-                size="large"
-                placeholder="http://localhost:11434"
-                prefix={<ApiOutlined />}
-                onBlur={(e) => {
-                  const baseUrl = e.target.value
-                  const currentValues = form.getFieldsValue()
-                  loadAvailableModels(baseUrl, currentValues.vlModel, currentValues.llmModel, true)
-                }}
-              />
-            </Form.Item>
+            {providerType !== 'openai-compatible' && (
+              <Form.Item
+                name="ollamaBaseUrl"
+                label="Ollama 服务地址"
+                rules={[
+                  { required: true, message: '请输入 Ollama 服务地址' },
+                  { pattern: /^https?:\/\/.+/, message: '请输入有效的 URL 地址' },
+                ]}
+                extra="Ollama 服务的完整地址，包括端口号"
+              >
+                <Input
+                  size="large"
+                  placeholder="http://localhost:11434"
+                  prefix={<ApiOutlined />}
+                  onBlur={(e) => {
+                    const baseUrl = e.target.value
+                    const currentValues = form.getFieldsValue()
+                    loadAvailableModels(baseUrl, currentValues.vlModel, currentValues.llmModel, true)
+                  }}
+                />
+              </Form.Item>
+            )}
 
             {/* OpenAI 兼容配置项 */}
-            <Form.Item
-              name="apiBaseUrl"
-              label="API 基础地址"
-              rules={[
-                { required: form.getFieldValue('provider') === 'openai-compatible', message: '请输入 API 基础地址' },
-                { pattern: /^https?:\/\/.+/, message: '请输入有效的 URL 地址' },
-              ]}
-              extra="第三方 API 服务商的基础地址（如：https://api.openai.com/v1）"
-              style={{ display: form.getFieldValue('provider') === 'openai-compatible' ? 'block' : 'none' }}
-            >
-              <Input
-                size="large"
-                placeholder="https://api.openai.com/v1"
-                prefix={<ApiOutlined />}
-              />
-            </Form.Item>
+            {providerType === 'openai-compatible' && (
+              <>
+                <Form.Item
+                  name="apiBaseUrl"
+                  label="API 基础地址"
+                  rules={[
+                    { required: true, message: '请输入 API 基础地址' },
+                    { pattern: /^https?:\/\/.+/, message: '请输入有效的 URL 地址' },
+                  ]}
+                  extra="第三方 API 服务商的基础地址（如：https://api.openai.com/v1）"
+                >
+                  <Input
+                    size="large"
+                    placeholder="https://api.openai.com/v1"
+                    prefix={<ApiOutlined />}
+                  />
+                </Form.Item>
 
-            <Form.Item
-              name="apiKey"
-              label="API Key"
-              rules={[{ required: form.getFieldValue('provider') === 'openai-compatible', message: '请输入 API Key' }]}
-              extra="您的 API 密钥，请妥善保管"
-              style={{ display: form.getFieldValue('provider') === 'openai-compatible' ? 'block' : 'none' }}
-            >
-              <Input.Password
-                size="large"
-                placeholder="sk-..."
-                prefix={<ApiOutlined />}
-              />
-            </Form.Item>
+                <Form.Item
+                  name="apiKey"
+                  label="API Key"
+                  rules={[{ required: true, message: '请输入 API Key' }]}
+                  extra="您的 API 密钥，请妥善保管"
+                >
+                  <Input.Password
+                    size="large"
+                    placeholder="sk-..."
+                    prefix={<ApiOutlined />}
+                    autoComplete="current-password"
+                  />
+                </Form.Item>
+              </>
+            )}
 
             <Form.Item
               name="vlModel"
               label="视觉模型"
               rules={[{ required: true, message: '请选择视觉模型' }]}
-              extra={form.getFieldValue('provider') === 'openai-compatible' 
+              extra={providerType === 'openai-compatible' 
                 ? "用于图像识别的模型，如 GPT-4V、Qwen-VL 等"
                 : "用于图像识别的模型，建议选择具有视觉能力的模型"
               }
@@ -407,7 +415,7 @@ const Settings = () => {
                 filterOption={(input, option) =>
                   (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
                 }
-                options={form.getFieldValue('provider') === 'openai-compatible'
+                options={providerType === 'openai-compatible'
                   ? visionOpenAIModels
                   : availableModels
                       .filter(m => m.capabilities?.includes('vision') || m.name.includes('vl'))
@@ -425,7 +433,7 @@ const Settings = () => {
               name="llmModel"
               label="语言模型"
               rules={[{ required: true, message: '请选择语言模型' }]}
-              extra={form.getFieldValue('provider') === 'openai-compatible' 
+              extra={providerType === 'openai-compatible' 
                 ? "用于文本生成的模型，如 GPT-4、Qwen 等"
                 : "用于文本生成的模型，建议选择性能较好的语言模型（如 qwen2.5）"
               }
@@ -438,7 +446,7 @@ const Settings = () => {
                 filterOption={(input, option) =>
                   (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
                 }
-                options={form.getFieldValue('provider') === 'openai-compatible'
+                options={providerType === 'openai-compatible'
                   ? openAIModels
                   : availableModels.map(m => ({
                       value: m.name,
