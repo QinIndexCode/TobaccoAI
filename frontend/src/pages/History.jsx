@@ -104,7 +104,8 @@ function History() {
     if (!imagePaths || imagePaths.length === 0) return null
     const firstImage = imagePaths[0]
     if (firstImage.startsWith('http')) return firstImage
-    return `http://localhost:8000/${firstImage}`
+    const baseUrl = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000'
+    return `${baseUrl}/${firstImage}`
   }
 
   if (loading) {

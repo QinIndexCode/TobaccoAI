@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Upload, App } from 'antd'
 import { InboxOutlined, DeleteOutlined, PlusOutlined } from '@ant-design/icons'
 
@@ -6,7 +6,15 @@ const { Dragger } = Upload
 
 const ImageUploader = ({ onChange, maxCount = 3 }) => {
   const [fileList, setFileList] = useState([])
+  const [objectUrls, setObjectUrls] = useState([])
   const { message } = App.useApp()
+
+  // 清理 object URL，防止内存泄漏
+  useEffect(() => {
+    return () => {
+      objectUrls.forEach(url => URL.revokeObjectURL(url))
+    }
+  }, [objectUrls])
 
   const beforeUpload = (file) => {
     const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png'
@@ -30,12 +38,28 @@ const ImageUploader = ({ onChange, maxCount = 3 }) => {
   }
 
   const handleChange = ({ fileList: newFileList }) => {
+    // 为新文件创建 object URL
+    const newUrls = newFileList
+      .filter(file => file.originFileObj && !objectUrls.find(url => url.includes(file.uid)))
+      .map(file => URL.createObjectURL(file.originFileObj))
+    
+    if (newUrls.length > 0) {
+      setObjectUrls(prev => [...prev, ...newUrls])
+    }
+    
     setFileList(newFileList)
     const files = newFileList.map(item => item.originFileObj).filter(Boolean)
     onChange?.(files)
   }
 
   const handleRemove = (file) => {
+    // 释放被删除文件的 object URL
+    const urlToRevoke = objectUrls.find(url => url.includes(file.uid))
+    if (urlToRevoke) {
+      URL.revokeObjectURL(urlToRevoke)
+      setObjectUrls(prev => prev.filter(url => url !== urlToRevoke))
+    }
+    
     const newFileList = fileList.filter(item => item.uid !== file.uid)
     setFileList(newFileList)
     const files = newFileList.map(item => item.originFileObj).filter(Boolean)
@@ -93,7 +117,7 @@ const ImageUploader = ({ onChange, maxCount = 3 }) => {
                 role="listitem"
               >
                 <img
-                  src={URL.createObjectURL(file.originFileObj || file)}
+                  src={objectUrls.find(url => url.includes(file.uid)) || URL.createObjectURL(file.originFileObj || file)}
                   alt={`已上传图片 ${index + 1}`}
                   className="w-full h-full object-cover"
                 />

@@ -251,14 +251,15 @@ async def diagnose(
         )
     except Exception as e:
         error_msg = str(e)
+        print(f"诊断错误: {error_msg}")
         if "Ollama API error" in error_msg:
             raise HTTPException(
                 status_code=502,
-                detail=f"Ollama服务响应错误: {error_msg}"
+                detail="Ollama服务响应错误，请检查服务状态"
             )
         raise HTTPException(
             status_code=500,
-            detail=f"诊断过程发生错误: {error_msg}"
+            detail="诊断过程发生错误，请稍后重试"
         )
     
     vl_data = diagnosis_result.get("image_analysis", {})
@@ -380,9 +381,15 @@ async def delete_history_item(diagnosis_id: str, db: AsyncSession = Depends(get_
     image_paths = json.loads(record.image_paths)
     for image_path in image_paths:
         try:
-            if os.path.exists(image_path):
+            # 验证文件路径是否在允许的目录范围内
+            abs_path = os.path.abspath(image_path)
+            abs_upload_dir = os.path.abspath(str(UPLOAD_DIR))
+            if not abs_path.startswith(abs_upload_dir):
+                print(f"非法文件路径: {image_path}")
+                continue
+            if os.path.exists(abs_path):
                 # Use thread pool for file deletion
-                await asyncio.to_thread(os.remove, image_path)
+                await asyncio.to_thread(os.remove, abs_path)
         except Exception as e:
             print(f"删除图片文件失败: {image_path}, 错误: {e}")
     

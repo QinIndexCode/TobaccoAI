@@ -22,7 +22,8 @@ function ImageGallery({ images = [] }) {
 
   const getFullUrl = (path) => {
     if (path.startsWith('http')) return path
-    return `http://localhost:8000/${path}`
+    const baseUrl = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000'
+    return `${baseUrl}/${path}`
   }
 
   return (

@@ -50,7 +50,7 @@ class SecurityManager:
             return base64.urlsafe_b64encode(encrypted).decode('utf-8')
         except Exception as e:
             print(f"加密失败：{e}")
-            return plaintext  # 失败时返回原文
+            raise ValueError("加密失败，请检查密钥配置")
     
     def decrypt(self, ciphertext: str) -> str:
         """解密字符串"""
@@ -62,7 +62,7 @@ class SecurityManager:
             return decrypted.decode('utf-8')
         except Exception as e:
             print(f"解密失败：{e}")
-            return ciphertext  # 失败时返回密文（可能是旧数据）
+            raise ValueError("解密失败，数据可能已损坏")
     
     def mask(self, text: str, visible_chars: int = 4) -> str:
         """掩码显示敏感信息"""
